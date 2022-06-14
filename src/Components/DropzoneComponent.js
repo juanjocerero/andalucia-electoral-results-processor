@@ -27,15 +27,13 @@ const baseStyle = {
   color: '#bdbdbd',
   transition: 'border .15s ease-in-out',
   width: '85vw',
-  height: '25vh',
+  height: '15vh',
   margin: '0 auto',
   marginBottom: '1rem'
 }
 
 const activeStyle = { borderColor: '#2196f3' }
-
 const acceptStyle = { borderColor: '#00e676' }
-
 const rejectStyle = { borderColor: '#ff1744' }
 
 const handleBaseData = data => {
@@ -70,7 +68,7 @@ function DropzoneComponent(props) {
   }
   
   const { readString } = usePapaParse()
-
+  
   // Very gypsy
   useEffect(() => {
     setJaenChecked(false)
@@ -96,7 +94,7 @@ function DropzoneComponent(props) {
           complete: results => {
             
             setDownloadData(handleBaseData(results.data).map(element => {
-
+              
               const finalObject = {
                 codmun: element.codmun, 
                 mun: element.mun, 
@@ -108,19 +106,51 @@ function DropzoneComponent(props) {
                 cs: null,
               }
               
-              finalObject.pp = Number((Number(element.percs[element.ids.indexOf("0020")])/100).toFixed(2)).toLocaleString('es-ES')
-              finalObject.psoe = Number((Number(element.percs[element.ids.indexOf("0021")])/100).toFixed(2)).toLocaleString('es-ES')
-              finalObject.vox = Number((Number(element.percs[element.ids.indexOf("0029")])/100).toFixed(2)).toLocaleString('es-ES')
-              finalObject.porand = Number((Number(element.percs[element.ids.indexOf("0019")])/100).toFixed(2)).toLocaleString('es-ES')
-              finalObject.adelante = Number((Number(element.percs[element.ids.indexOf("0001")])/100).toFixed(2)).toLocaleString('es-ES')
-              finalObject.cs = Number((Number(element.percs[element.ids.indexOf("0004")])/100).toFixed(2)).toLocaleString('es-ES')
+              finalObject.pp = Number((Number(element.percs[element.ids.indexOf("0020")])/100).toFixed(2))
+              finalObject.psoe = Number((Number(element.percs[element.ids.indexOf("0021")])/100).toFixed(2))
+              finalObject.vox = Number((Number(element.percs[element.ids.indexOf("0029")])/100).toFixed(2))
+              finalObject.porand = Number((Number(element.percs[element.ids.indexOf("0019")])/100).toFixed(2))
+              finalObject.adelante = Number((Number(element.percs[element.ids.indexOf("0001")])/100).toFixed(2))
+              finalObject.cs = Number((Number(element.percs[element.ids.indexOf("0004")])/100).toFixed(2))
               
               if (jaenChecked) {
-                finalObject.jmm = Number((Number(element.percs[element.ids.indexOf("0010")])/100).toFixed(2)).toLocaleString('es-ES');
+                finalObject.jmm = Number((Number(element.percs[element.ids.indexOf("0010")])/100).toFixed(2))
               }
-          
+              
               if (fullReportChecked) {
-                // TODO: implementar el resto de candidaturas
+                finalObject.levantaos = Number((Number(element.percs[element.ids.indexOf("0002")])/100).toFixed(2))
+                finalObject.crsxa = Number((Number(element.percs[element.ids.indexOf("0003")])/100).toFixed(2))
+                finalObject.despierta = Number((Number(element.percs[element.ids.indexOf("0005")])/100).toFixed(2))
+                finalObject.esc_blanco = Number((Number(element.percs[element.ids.indexOf("0006")])/100).toFixed(2))
+                finalObject.falange = Number((Number(element.percs[element.ids.indexOf("0007")])/100).toFixed(2))
+                finalObject.basta_ya = Number((Number(element.percs[element.ids.indexOf("0008")])/100).toFixed(2))
+                finalObject.izar = Number((Number(element.percs[element.ids.indexOf("0009")])/100).toFixed(2))
+                finalObject.jub_futuro = Number((Number(element.percs[element.ids.indexOf("0011")])/100).toFixed(2))
+                finalObject.jxgranada = Number((Number(element.percs[element.ids.indexOf("0012")])/100).toFixed(2))
+                finalObject.verdes = Number((Number(element.percs[element.ids.indexOf("0013")])/100).toFixed(2))
+                finalObject.nacion_and = Number((Number(element.percs[element.ids.indexOf("0014")])/100).toFixed(2))
+                finalObject.pacma = Number((Number(element.percs[element.ids.indexOf("0015")])/100).toFixed(2))
+                finalObject.p_autonomos = Number((Number(element.percs[element.ids.indexOf("0016")])/100).toFixed(2))
+                finalObject.pcpa = Number((Number(element.percs[element.ids.indexOf("0017")])/100).toFixed(2))
+                finalObject.pcte = Number((Number(element.percs[element.ids.indexOf("0018")])/100).toFixed(2))
+                finalObject.pumj = Number((Number(element.percs[element.ids.indexOf("0022")])/100).toFixed(2))
+                finalObject.recortes_cero = Number((Number(element.percs[element.ids.indexOf("0023")])/100).toFixed(2))
+                finalObject.rec_cero_almeria = Number((Number(element.percs[element.ids.indexOf("0024")])/100).toFixed(2))
+                finalObject.rec_cero_izq_posit = Number((Number(element.percs[element.ids.indexOf("0025")])/100).toFixed(2))
+                finalObject.rec_cero_jaen_viva = Number((Number(element.percs[element.ids.indexOf("0026")])/100).toFixed(2))
+                finalObject.somos_fuerza = Number((Number(element.percs[element.ids.indexOf("0027")])/100).toFixed(2))
+                finalObject.volt = Number((Number(element.percs[element.ids.indexOf("0028")])/100).toFixed(2))
+                // finalObject.por_huelva = Number((Number(element.percs[element.ids.indexOf("0030")])/100).toFixed(2)).toLocaleString('es-ES');
+              }
+              
+              for (const key in finalObject) { 
+                if (key !== 'codmun' && key !== 'mun' && isNaN(finalObject[key])) { 
+                  finalObject[key] = 0 
+                } else {
+                  if (key !== 'codmun' && key !== 'mun') {
+                    finalObject[key] = finalObject[key].toLocaleString('es-ES')
+                  }
+                }
               }
               
               return finalObject
@@ -135,13 +165,7 @@ function DropzoneComponent(props) {
     
   }, [readString, jaenChecked, fullReportChecked])
   
-  const { 
-    getRootProps, 
-    getInputProps, 
-    isDragAccept, 
-    isDragActive, 
-    isDragReject 
-  } = useDropzone({ onDrop })
+  const { getRootProps, getInputProps, isDragAccept, isDragActive, isDragReject } = useDropzone({ onDrop })
   
   const style = useMemo(() => ({
     ...baseStyle,
@@ -172,7 +196,7 @@ function DropzoneComponent(props) {
     </div>
     {
       downloadData ? 
-      <CSVDownloaderComponent data={downloadData} /> : null
+      <CSVDownloaderComponent data={downloadData} buttonText={'Descargar datos limpios'} fileName={'datos_municipales'} /> : null
     }
     
     </div>

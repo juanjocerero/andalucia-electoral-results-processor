@@ -15,8 +15,10 @@ export default function CSVDownloaderComponent(props) {
 
   return (
     <div style={containerStyle}>
-    <CSVDownloader data={props.data} type={Type.Link} filename='datos_limpios' bom={true} config={{delimiter: ','}}>
-      <Button variant="contained" size="large" endIcon={<Download />} style={{ minWidth: '50vw', minHeight: '4rem' }}>Descargar datos limpios</Button>
+    <CSVDownloader data={props.data} type={Type.Link} filename={props.fileName} bom={true} config={{delimiter: ','}}>
+      <Button variant="contained" size="large" endIcon={<Download />} style={{ minWidth: '50vw', minHeight: '4rem' }}>
+        { props.buttonText }
+      </Button>
     </CSVDownloader>
     </div>
   )
