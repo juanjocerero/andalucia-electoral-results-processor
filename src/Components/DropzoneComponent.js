@@ -19,15 +19,15 @@ const baseStyle = {
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
-  borderWidth: 4,
-  borderRadius: 1,
-  borderColor: '#eeeeee',
+  borderWidth: 2,
+  borderRadius: 3,
+  borderColor: '#748d9a',
   borderStyle: 'dashed',
   backgroundColor: '#fafafa',
   color: '#bdbdbd',
   transition: 'border .15s ease-in-out',
-  width: '85vw',
-  height: '15vh',
+  width: '90vw',
+  height: '8vh',
   margin: '0 auto',
   marginBottom: '1rem'
 }
@@ -192,11 +192,11 @@ function DropzoneComponent(props) {
     
     <div {...getRootProps({style})}>
     <input {...getInputProps()} />
-    <Typography variant="h4">Suelta el archivo o pincha para subir</Typography>
+    <Typography variant="h6">Suelta el archivo o pincha para subir</Typography>
     </div>
     {
       downloadData ? 
-      <CSVDownloaderComponent data={downloadData} buttonText={'Descargar datos limpios'} fileName={'datos_municipales'} /> : null
+      <CSVDownloaderComponent data={downloadData} buttonText={'Datos municipales'} fileName={'datos_municipales'} /> : null
     }
     
     </div>
