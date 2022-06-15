@@ -28,9 +28,9 @@ const baseStyle = {
 const handlePossibleResults = (element, candidatura) => element.length > 1 ? element.map(e => e[candidatura]).reduce((prev, curr) => Number(prev) + Number(curr), 0) : Number(first(element)[candidatura])
 
 const aggregateResults = element => {
-	const resObject = { distcode: Number(first(element).coddist) }
-	const propertyNameToColumnNames = {
-		censo: 'Censo Total',
+  const resObject = { distcode: Number(first(element).coddist) }
+  const propertyNameToColumnNames = {
+    censo: 'Censo Total',
     votos_validos: 'Votos Electores',
     votos_blancos: 'Votos Blancos',
     votos_nulos: 'Votos Nulos',
@@ -62,20 +62,20 @@ const aggregateResults = element => {
     somos_futuro: 'SOMOS FUTURO',
     volt: 'VOLT',
     vox: 'VOX'
-	}
-
+  }
+  
   each(Object.entries(propertyNameToColumnNames), keyValuePair => {
     resObject[keyValuePair[0]] = handlePossibleResults(element, keyValuePair[1])
   })
-
+  
   resObject.participacion = Number((((resObject.votos_validos + resObject.votos_blancos) / resObject.censo)*100).toFixed(2)) 
-
+  
   for (const key in resObject) {
     if (isNaN(resObject[key])) {
       resObject[key] = 0
     }
   }
-
+  
   return resObject
 }
 
@@ -119,8 +119,8 @@ const MesasComponent = props => {
             let tempDistritoData = []
             each(dataByDistrito, distrito => tempDistritoData.push(aggregateResults(distrito)))
             setDistritoData(tempDistritoData)
-
-
+            
+            
             const aggregateMesas = (mesas, colegio) => {
               let sumOfMesas = aggregateResults(mesas)
               let tempObject = {
@@ -160,10 +160,10 @@ const MesasComponent = props => {
                 somos_futuro: sumOfMesas.somos_futuro,
                 volt: sumOfMesas.volt
               }
-
+              
               return tempObject
             }
-
+            
             const tempColegioData = []
             each(uniqBy(colegios, 'nombre'), colegio => {
               let mesas = grxData.filter(e => e.codcolegio === colegio.id)
