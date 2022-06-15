@@ -98,8 +98,8 @@ function DropzoneComponent(props) {
               const finalObject = {
                 codmun: element.codmun, 
                 mun: element.mun, 
-                psoe: null, 
                 pp: null, 
+                psoe: null, 
                 vox: null, 
                 porand: null, 
                 adelante: null, 
