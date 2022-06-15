@@ -27,7 +27,7 @@ const baseStyle = {
 
 const aggregateResults = element => {
   let tempObject = {
-    distcode: element.length > 1 ? Number(first(element).coddist) : element.coddist,
+    distcode: Number(first(element).coddist),
     censo: element.length > 1 ? element.map(e => e['Censo Total']).reduce((prev, curr) => Number(prev) + Number(curr), 0) : Number(first(element)['Censo Total']),
     votos_validos: element.length > 1 ? element.map(e => e['Votos Electores']).reduce((prev, curr) => Number(prev) + Number(curr), 0) : Number(first(element)['Votos Electores']),
     votos_blancos: element.length > 1 ? element.map(e => e['Votos Blancos']).reduce((prev, curr) => Number(prev) + Number(curr), 0) : Number(first(element)['Votos Blancos']),
@@ -123,7 +123,7 @@ const MesasComponent = props => {
                 direccion: colegio.direccion,
                 lat: colegio.lat,
                 lng: colegio.lng,
-                // distcode: sumOfMesas.distcode,
+                distcode: sumOfMesas.distcode,
                 censo: sumOfMesas.censo,
                 participacion: sumOfMesas.participacion,
                 pp: sumOfMesas.pp,
@@ -159,7 +159,6 @@ const MesasComponent = props => {
 
             const tempColegioData = []
             each(uniqBy(colegios, 'nombre'), colegio => {
-              // console.log(colegio)
               let mesas = grxData.filter(e => e.codcolegio === colegio.id)
               if (!isUndefined(mesas) && mesas.length) {
                 tempColegioData.push(aggregateMesas(mesas, colegio))
