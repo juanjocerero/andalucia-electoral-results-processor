@@ -25,52 +25,58 @@ const baseStyle = {
   marginBottom: '1rem'
 }
 
+const handlePossibleResults = (element, candidatura) => element.length > 1 ? element.map(e => e[candidatura]).reduce((prev, curr) => Number(prev) + Number(curr), 0) : Number(first(element)[candidatura])
+
 const aggregateResults = element => {
-  let tempObject = {
-    distcode: Number(first(element).coddist),
-    censo: element.length > 1 ? element.map(e => e['Censo Total']).reduce((prev, curr) => Number(prev) + Number(curr), 0) : Number(first(element)['Censo Total']),
-    votos_validos: element.length > 1 ? element.map(e => e['Votos Electores']).reduce((prev, curr) => Number(prev) + Number(curr), 0) : Number(first(element)['Votos Electores']),
-    votos_blancos: element.length > 1 ? element.map(e => e['Votos Blancos']).reduce((prev, curr) => Number(prev) + Number(curr), 0) : Number(first(element)['Votos Blancos']),
-    votos_nulos: element.length > 1 ? element.map(e => e['Votos Nulos']).reduce((prev, curr) => Number(prev) + Number(curr), 0) : Number(first(element)['Votos Nulos']),
-    adelante: element.length > 1 ? element.map(e => e['ADELANTE ANDALUCÍA-ANDALUCISTAS'])?.reduce((prev, curr) => Number(prev) + Number(curr), 0) : Number(first(element)['ADELANTE ANDALUCÍA-ANDALUCISTAS']),
-    levantaos: element.length > 1 ? element.map(e => e['AL'])?.reduce((prev, curr) => Number(prev) + Number(curr), 0) : Number(first(element)['AL']),
-    crsxa: element.length > 1 ? element.map(e => e['CRSxA'])?.reduce((prev, curr) => Number(prev) + Number(curr), 0) : Number(first(element)['CRSxA']),
-    cs: element.length > 1 ? element.map(e => e['Cs'])?.reduce((prev, curr) => Number(prev) + Number(curr), 0) : Number(first(element)['Cs']),
-    escanos_blanco: element.length > 1 ? element.map(e => e['ESCAÑOS EN BLANCO'])?.reduce((prev, curr) => Number(prev) + Number(curr), 0) : Number(first(element)['ESCAÑOS EN BLANCO']),
-    falange: element.length > 1 ? element.map(e => e['FE de las JONS'])?.reduce((prev, curr) => Number(prev) + Number(curr), 0) : Number(first(element)['FE de las JONS']),
-    basta_ya: element.length > 1 ? element.map(e => e['Federación BASTA YA!'])?.reduce((prev, curr) => Number(prev) + Number(curr), 0) : Number(first(element)['Federación BASTA YA!']),
-    izar: element.length > 1 ? element.map(e => e['IZAR'])?.reduce((prev, curr) => Number(prev) + Number(curr), 0) : Number(first(element)['IZAR']),
-    jmm: element.length > 1 ? element.map(e => e['JM+'])?.reduce((prev, curr) => Number(prev) + Number(curr), 0) : Number(first(element)['JM+']),
-    jub_futuro: element.length > 1 ? element.map(e => e['JUFUDI'])?.reduce((prev, curr) => Number(prev) + Number(curr), 0) : Number(first(element)['JUFUDI']),
-    jxg: element.length > 1 ? element.map(e => e['LOS VERDES'])?.reduce((prev, curr) => Number(prev) + Number(curr), 0) : Number(first(element)['LOS VERDES']),
-    nacion_andaluza: element.length > 1 ? element.map(e => e['N.A.'])?.reduce((prev, curr) => Number(prev) + Number(curr), 0) : Number(first(element)['N.A.']),
-    pacma: element.length > 1 ? element.map(e => e['PACMA'])?.reduce((prev, curr) => Number(prev) + Number(curr), 0) : Number(first(element)['PACMA']),
-    autonomos: element.length > 1 ? element.map(e => e['PARTIDO AUTÓNOMOS'])?.reduce((prev, curr) => Number(prev) + Number(curr), 0) : Number(first(element)['PARTIDO AUTÓNOMOS']),
-    pcpa: element.length > 1 ? element.map(e => e['PCPA'])?.reduce((prev, curr) => Number(prev) + Number(curr), 0) : Number(first(element)['PCPA']),
-    pcte: element.length > 1 ? element.map(e => e['PCTE'])?.reduce((prev, curr) => Number(prev) + Number(curr), 0) : Number(first(element)['PCTE']),
-    por_andalucia: element.length > 1 ? element.map(e => e['PorA'])?.reduce((prev, curr) => Number(prev) + Number(curr), 0) : Number(first(element)['PorA']),
-    pp: element.length > 1 ? element.map(e => e['PP'])?.reduce((prev, curr) => Number(prev) + Number(curr), 0) : Number(first(element)['PP']),
-    psoe: element.length > 1 ? element.map(e => e['PSOE-A'])?.reduce((prev, curr) => Number(prev) + Number(curr), 0) : Number(first(element)['PSOE-A']),
-    pumj: element.length > 1 ? element.map(e => e['PUM+J'])?.reduce((prev, curr) => Number(prev) + Number(curr), 0) : Number(first(element)['PUM+J']),
-    rec_cero: element.length > 1 ? element.map(e => e['RECORTES CERO'])?.reduce((prev, curr) => Number(prev) + Number(curr), 0) : Number(first(element)['RECORTES CERO']),
-    rec_ipal: element.length > 1 ? element.map(e => e['RECORTES CERO-IPAL'])?.reduce((prev, curr) => Number(prev) + Number(curr), 0) : Number(first(element)['RECORTES CERO-IPAL']),
-    rec_izqp: element.length > 1 ? element.map(e => e['RECORTES CERO - IZQP'])?.reduce((prev, curr) => Number(prev) + Number(curr), 0) : Number(first(element)['RECORTES CERO - IZQP']),
-    rec_jv: element.length > 1 ? element.map(e => e['RECORTES CERO-JV'])?.reduce((prev, curr) => Number(prev) + Number(curr), 0) : Number(first(element)['RECORTES CERO-JV']),
-    somos_futuro: element.length > 1 ? element.map(e => e['SOMOS FUTURO'])?.reduce((prev, curr) => Number(prev) + Number(curr), 0) : Number(first(element)['SOMOS FUTURO']),
-    volt: element.length > 1 ? element.map(e => e['VOLT'])?.reduce((prev, curr) => Number(prev) + Number(curr), 0) : Number(first(element)['VOLT']),
-    vox: element.length > 1 ? element.map(e => e['VOX'])?.reduce((prev, curr) => Number(prev) + Number(curr), 0) : Number(first(element)['VOX']),
-    // por_huelva: element.length > 1 ? element.map(e => e['XH'])?.reduce((prev, curr) => Number(prev) + Number(curr), 0) : Number(first(element)['XH'])
-  }
-  
-  tempObject.participacion = Number((((tempObject.votos_validos + tempObject.votos_blancos) / tempObject.censo)*100).toFixed(2)) 
-  
-  for (const key in tempObject) {
-    if (isNaN(tempObject[key])) {
-      tempObject[key] = 0
+	const resObject = { distcode: Number(first(element).coddist) }
+	const propertyNameToColumnNames = {
+		censo: 'Censo Total',
+    votos_validos: 'Votos Electores',
+    votos_blancos: 'Votos Blancos',
+    votos_nulos: 'Votos Nulos',
+    adelante: 'ADELANTE ANDALUCÍA-ANDALUCISTAS',
+    levantaos: 'AL',
+    crsxa: 'CRSxA',
+    cs: 'Cs',
+    escanos_blanco: 'ESCAÑOS EN BLANCO',
+    falange: 'FE de las JONS',
+    basta_ya: 'Federación BASTA YA!',
+    izar: 'IZAR',
+    jmm: 'JM+',
+    jub_futuro: 'JUFUDI',
+    jxg: 'JxG',
+    verdes: 'LOS VERDES',
+    nacion_andaluza: 'N.A.',
+    pacma: 'PACMA',
+    autonomos: 'PARTIDO AUTÓNOMOS',
+    pcpa: 'PCPA',
+    pcte: 'PCTE',
+    por_andalucia: 'PorA',
+    pp: 'PP',
+    psoe: 'PSOE-A',
+    pumj: 'PUM+J',
+    rec_cero: 'RECORTES CERO',
+    rec_ipal: 'RECORTES CERO-IPAL',
+    rec_izqp: 'RECORTES CERO - IZQP',
+    rec_jv: 'RECORTES CERO-JV',
+    somos_futuro: 'SOMOS FUTURO',
+    volt: 'VOLT',
+    vox: 'VOX'
+	}
+
+  each(Object.entries(propertyNameToColumnNames), keyValuePair => {
+    resObject[keyValuePair[0]] = handlePossibleResults(element, keyValuePair[1])
+  })
+
+  resObject.participacion = Number((((resObject.votos_validos + resObject.votos_blancos) / resObject.censo)*100).toFixed(2)) 
+
+  for (const key in resObject) {
+    if (isNaN(resObject[key])) {
+      resObject[key] = 0
     }
   }
-  
-  return tempObject
+
+  return resObject
 }
 
 const activeStyle = { borderColor: '#2196f3' }
@@ -141,6 +147,7 @@ const MesasComponent = props => {
                 jmm: sumOfMesas.jmm,
                 jub_futuro: sumOfMesas.jub_futuro,
                 jxg: sumOfMesas.jxg,
+                verdes: sumOfMesas.verdes,
                 levantaos: sumOfMesas.levantaos,
                 nacion_andaluza: sumOfMesas.nacion_andaluza,
                 pacma: sumOfMesas.pacma,
