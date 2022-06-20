@@ -34,7 +34,7 @@ const aggregateResults = element => {
     votos_validos: 'Votos Electores',
     votos_blancos: 'Votos Blancos',
     votos_nulos: 'Votos Nulos',
-    adelante: 'ADELANTE ANDALUCÍA-ANDALUCISTAS',
+    adelante: 'ADELANTE ANDALUC�A-ANDALUCISTAS',
     levantaos: 'AL',
     crsxa: 'CRSxA',
     cs: 'Cs',
