@@ -204,4 +204,4 @@ function DropzoneComponent(props) {
     
   }
   
-  export default DropzoneComponent;
+  export default DropzoneComponent
